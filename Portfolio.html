@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alhanouf Alqahtani Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232a3d6b'/%3E%3Ctext x='16' y='25' font-size='24' text-anchor='middle' fill='%23f4f1e9'%3E%E2%99%9E%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <script>history.scrollRestoration = 'manual';</script>
+
+  <div class="board-grid"></div>
+  <div class="chess-ambient" aria-hidden="true"></div>
+
+  <div class="stage" aria-hidden="true">
+    <canvas id="cube-canvas"></canvas>
+  </div>
+
+  <nav class="nav">
+    <div class="brand">
+      <span class="dot"></span>
+      <span>Alhanouf Alqahtani</span>
+    </div>
+    <div class="nav-right">
+      <span>Portfolio &middot; 2026</span>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="3" fill="currentColor"/><path d="M6 0v2M6 10v2M0 6h2M10 6h2M1.8 1.8l1.4 1.4M8.8 8.8l1.4 1.4M1.8 10.2l1.4-1.4M8.8 3.2l1.4-1.4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+        <span class="t-label">Dark</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="content">
+
+    <!-- HERO ------------------------------------------------------ -->
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <h1>
+          Alhanouf<br />
+          <span class="it" style="color: rgb(255, 134, 35)">Alqahtani.</span>
+        </h1>
+        <p class="hero-tagline">AI Developer with too  
+        <br> many side quests</p>
+      </div>
+      <div class="scroll-cue">
+        <span>Scroll to solve</span>
+        <div class="arrow"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT ----------------------------------------------------- -->
+    <section id="about" class="section right">
+      <div class="col">
+        <span class="eyebrow"><span class="num">01</span> About</span>
+        <h2 class="display">Crafting intelligent and interactive systems</h2>
+        <div class="stats">
+          <div class="stat">
+            <div class="num">4.71</div>
+            <div class="lbl">  GPA / 5.00</div>
+          </div>
+          <div class="stat">
+            <div class="num"> 260+</div>
+            <div class="lbl">    VOLUNTEER HRS</div>
+          </div>
+          <div class="stat">
+            <div class="num"> 7+</div>
+            <div class="lbl">    PROJECTS</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION ------------------------------------------------- -->
+    <section id="education" class="section left">
+      <div class="col">
+        <span class="eyebrow"><span class="num">02</span> Education</span>
+        <h2 class="display">Where the <span class="it">foundations</span> were set.</h2>
+
+        <ol class="timeline">
+          <li class="t-item">
+            <span class="t-year">2021 – 2025</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">B.Sc. Computer Science</div>
+              <div class="t-org">King Khalid University · Abha, KSA · GPA 4.71 / 5.0</div>
+            </div>
+          </li>
+          <li class="t-item">
+            <span class="t-year">2024 – 2025</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">Artificial Intelligence Specialization</div>
+              <div class="t-org">KAUST Academy · KAUST, KSA</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE ----------------------------------------------- -->
+    <section id="experience" class="section right">
+      <div class="col">
+        <span class="eyebrow"><span class="num">03</span> Experience</span>
+        <h2 class="display">From <span class="it">classroom</span> to <span class="it">deployment.</span></h2>
+
+        <ol class="timeline">
+          <li class="t-item">
+            <span class="t-year">Sep 2025 →</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">AI Engineering Intern</div>
+              <div class="t-org">Deanship of E-Services, King Khalid University</div>
+            </div>
+          </li>
+          <li class="t-item">
+            <span class="t-year">Jan 2026</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">Teaching Assistant</div>
+              <div class="t-org">KAUST Academy</div>
+            </div>
+          </li>
+          <li class="t-item">
+            <span class="t-year">May 2025</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">TA — Smart Agriculture &amp; IoT Camp</div>
+              <div class="t-org">King Khalid University</div>
+            </div>
+          </li>
+          <li class="t-item">
+            <span class="t-year">Oct 2024</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">Presenter — TinyML Minicourse</div>
+              <div class="t-org">King Khalid University</div>
+            </div>
+          </li>
+          <li class="t-item">
+            <span class="t-year">Mar 2024 – May 2025</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">Trainer — NLP for AI Spark · AI game-design workshop</div>
+              <div class="t-org">AI Club, King Khalid University</div>
+            </div>
+          </li>
+          <li class="t-item">
+            <span class="t-year">Jun – Sep 2024</span>
+            <span class="t-dot"></span>
+            <div class="t-body">
+              <div class="t-role">PR Specialist</div>
+              <div class="t-org">Kerneltics - remotely </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PROJECTS -------------------------------------------------- -->
+    <section id="projects" class="section full">
+      <div class="col">
+        <span class="eyebrow"><span class="num">04</span> Projects</span>
+        <h2 class="display">Problems, solved.</h2>
+
+        <div class="projects">
+
+          <article class="proj">
+            <div class="tag"><span>ML / DL</span><span>2025</span></div>
+            <h3>Solar <span class="it">Forecasting</span></h3>
+            <p>Real-time solar-power forecasting blending XGBoost with LSTM, BiLSTM &amp; CNN-LSTM. Served via FastAPI on live weather data.</p>
+            <div class="stack">
+              <span>XGBoost</span><span>LSTM</span><span>BiLSTM</span><span>FastAPI</span>
+            </div>
+            <a class="proj-link" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              <span>Code</span>
+            </a>
+          </article>
+
+          <article class="proj">
+            <div class="tag"><span>Edge AI · RAG</span><span>2025</span></div>
+            <h3>SAFAA — <span class="it">Voice assistant</span></h3>
+            <p>Offline edge AI assistant for Hajj &amp; Umrah pilgrims. STT/TTS on Raspberry Pi with retrieval over verified religious sources.</p>
+            <div class="stack">
+              <span>RAG</span><span>Raspberry Pi</span><span>STT / TTS</span>
+            </div>
+            <a class="proj-link" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              <span>Code</span>
+            </a>
+          </article>
+
+          <article class="proj">
+            <div class="tag"><span>RAG · NLP</span><span>2025</span></div>
+            <h3>Saudi <span class="it">ESG</span> Q&amp;A</h3>
+            <p>Retrieval-augmented system answering Saudi Environmental, Social and Governance compliance questions with grounded responses.</p>
+            <div class="stack">
+              <span>RAG</span><span>Vector DB</span><span>LLM</span>
+            </div>
+            <a class="proj-link" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              <span>Code</span>
+            </a>
+          </article>
+
+          <article class="proj">
+            <div class="tag"><span>CV · Accessibility</span><span>2024</span></div>
+            <h3>Braille<span class="it">Text</span></h3>
+            <p>AI that converts Arabic Braille into text, expanding accessibility tools for visually impaired Arabic readers.</p>
+            <div class="stack">
+              <span>Computer vision</span><span>Arabic NLP</span>
+            </div>
+            <a class="proj-link" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              <span>Code</span>
+            </a>
+          </article>
+
+          <a class="proj proj-more" href="https://github.com/hknl5?tab=repositories" target="_blank" rel="noopener">
+            <div class="proj-more-bg" aria-hidden="true"></div>
+            <div class="tag"><span>+ More</span><span>github.com/hknl5</span></div>
+            <h3>And many more live on GitHub.</h3>
+            <p>This portfolio shows the highlights. Notebooks, prototypes, hackathon repos and side quests all live in the full repo list.</p>
+            <div class="stack stack-bright">
+              <span>Notebooks</span><span>Prototypes</span><span>Hackathons</span><span>Side quests</span>
+            </div>
+            <span class="proj-link proj-link-bright">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              <span>Browse all repos &rarr;</span>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS — icon grid --------------------------------------- -->
+    <section id="skills" class="section left">
+      <div class="col">
+        <span class="eyebrow"><span class="num">05</span> Skills</span>
+        <h2 class="display">The <span class="it">stack</span> I think in.</h2>
+
+        <div class="skills-grid">
+          <div class="skill-tile" data-color="yellow"><img src="https://cdn.simpleicons.org/python" alt="" /><span>Python</span></div>
+          <div class="skill-tile" data-color="orange"><img src="https://cdn.simpleicons.org/pytorch" alt="" /><span>PyTorch</span></div>
+          <div class="skill-tile" data-color="orange"><img src="https://cdn.simpleicons.org/tensorflow" alt="" /><span>TensorFlow</span></div>
+          <div class="skill-tile" data-color="green"><img src="https://cdn.simpleicons.org/opencv" alt="" /><span>OpenCV</span></div>
+          <div class="skill-tile" data-color="yellow"><img src="https://cdn.simpleicons.org/huggingface" alt="" /><span>Hugging Face</span></div>
+          <div class="skill-tile" data-color="green"><img src="https://cdn.simpleicons.org/langchain" alt="" /><span>LangChain</span></div>
+          <div class="skill-tile" data-color="blue">
+            <span class="skill-letter">F</span><span>FAISS</span>
+          </div>
+          <div class="skill-tile" data-color="red"><img src="https://cdn.simpleicons.org/streamlit" alt="" /><span>Streamlit</span></div>
+          <div class="skill-tile" data-color="mono"><img src="https://cdn.simpleicons.org/nextdotjs/000000" alt="" /><span>Next.js</span></div>
+          <div class="skill-tile" data-color="teal"><img src="https://cdn.simpleicons.org/arduino" alt="" /><span>Arduino</span></div>
+          <div class="skill-tile" data-color="red"><img src="https://cdn.simpleicons.org/espressif" alt="" /><span>ESP32</span></div>
+          <div class="skill-tile" data-color="green">
+            <span class="skill-letter">B</span><span>Blynk</span>
+          </div>
+          <div class="skill-tile" data-color="orange"><img src="https://cdn.simpleicons.org/git" alt="" /><span>Git</span></div>
+          <div class="skill-tile" data-color="blue"><img src="https://cdn.simpleicons.org/docker" alt="" /><span>Docker</span></div>
+          <div class="skill-tile" data-color="orange"><img src="https://cdn.simpleicons.org/googlecolab" alt="" /><span>Colab</span></div>
+          <div class="skill-tile" data-color="violet"><img src="https://cdn.simpleicons.org/figma" alt="" /><span>Figma</span></div>
+          <div class="skill-tile" data-color="red"><img src="https://cdn.simpleicons.org/nodered" alt="" /><span>Node-RED</span></div>
+          <div class="skill-tile" data-color="orange"><img src="https://cdn.simpleicons.org/scikitlearn" alt="" /><span>scikit-learn</span></div>
+          <div class="skill-tile" data-color="violet"><img src="https://cdn.simpleicons.org/pandas" alt="" /><span>Pandas</span></div>
+          <div class="skill-tile" data-color="blue"><img src="https://cdn.simpleicons.org/numpy" alt="" /><span>NumPy</span></div>
+          <div class="skill-tile" data-color="mono"><span class="skill-letter">AI</span><span>OpenAI API</span></div>
+          <div class="skill-tile" data-color="violet">
+            <span class="skill-letter">Y</span><span>YOLO</span>
+          </div>
+          <div class="skill-tile" data-color="blue"><img src="https://cdn.simpleicons.org/r" alt="" /><span>R</span></div>
+          <div class="skill-tile" data-color="yellow"><img src="https://cdn.simpleicons.org/firebase" alt="" /><span>Firebase</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AWARDS + KNIGHT VS QUEEN ---------------------------------- -->
+    <section id="awards" class="section right">
+      <div class="col">
+        <span class="eyebrow"><span class="num">06</span> Awards &amp; hackathons</span>
+        <h2 class="display">A knight moves where queen cannot. </h2>
+
+        <!-- Genuine 3D Knight vs Queen vignette (Three.js) -->
+        <div class="knight-scene" aria-hidden="true">
+          <div class="board-stage">
+            <canvas id="chess-canvas"></canvas>
+          </div>
+          <div class="caption">
+            <span><span class="v">Nb6&times;Q</span> &middot; knight takes queen</span>
+            <span>real-time 3D</span>
+          </div>
+        </div>
+
+        <ul class="awards-list">
+          <li class="award">
+            <span class="place">1<sup> st</sup></span>
+            <span class="name">Contractors Hackathon
+              <small>Saudi Contractors Authority &middot; Dec 2024</small>
+            </span>
+            <span class="date">2024</span>
+          </li>
+          <li class="award">
+            <span class="place">3<sup> rd</sup></span>
+            <span class="name">Innovate 4 Impact Hackathon
+              <small>Ministry of Human Resources &amp; Social Development</small>
+            </span>
+            <span class="date">2026</span>
+          </li>
+          <li class="award">
+            <span class="place">8<sup> th</sup></span>
+            <span class="name">Education Hackathon
+              <small>King Khalid University &middot; Sep 2024</small>
+            </span>
+            <span class="date">2024</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT (final solved state) ----------------------------- -->
+    <section id="contact" class="section full">
+      <div class="col contact">
+        <span class="eyebrow"><span class="num">07</span> Contact</span>
+        <br>
+        <h2 class="display" style="text-align:center;font-weight: 700;font-style: italic;"><span style="color: #1f8a5b">Cube Solved!</span></h2>
+
+        <div class="channels">
+          <a href="mailto:alhanoufabdulraqib@gmail.com">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M2 4h20v16H2z M2 4l10 8 10-8" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+            <span>alhanoufabdulraqib@gmail.com</span>
+          </a>
+          <a href="tel:+966558856864">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+            <span>+966 55 885 6864</span>
+          </a>
+          <a href="https://github.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h4v2c.6-1.1 2.1-2.3 4.3-2.3 4.6 0 5.5 3 5.5 7v6.3h-4v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21h-4V9z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="#hero">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19V5 M5 12l7-7 7 7"/></svg>
+            <span>Top</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <span>Alhanouf Alqahtani &middot; KSA</span>
+    <span>Built with care &middot; 2026</span>
+  </footer>
+
+  <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+  <script src="cube.js"></script>
+  <script src="pieces.js"></script>
+  <script src="scene.js"></script>
+
+</body>
+</html>
