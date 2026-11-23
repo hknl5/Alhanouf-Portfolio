@@ -31,6 +31,8 @@
     'experience':  { x:  2.4, y: 0.0 },
     'projects':    { x:  0.0, y: 0.6 },
     'skills':      { x: -2.4, y: 0.0 },
+    'workshops':   { x: -2.4, y: 0.0 },
+    'certs':       { x:  2.4, y: 0.0 },
     'awards':      { x:  3.0, y: 0.2 },
     'leadership':  { x: -2.4, y: 0.0 },
     'contact':     { x:  0.0, y: 0.0 },
@@ -69,7 +71,7 @@
   onScroll();
 
   // ---------------------------------------------------------
-  // 2. Theme toggle (light default, dark optional)
+  // 2. Theme toggle (dark default, light optional)
   // ---------------------------------------------------------
   const themeBtn = document.querySelector('.theme-toggle');
   const themeLabel = themeBtn.querySelector('.t-label');
@@ -78,16 +80,16 @@
     cube.setTheme(theme);
     if (window.__vignette) window.__vignette.setTheme(theme);
     themeLabel.textContent = theme === 'dark' ? 'Light' : 'Dark';
-    try { localStorage.setItem('portfolio-theme', theme); } catch (e) {}
+    try { localStorage.setItem('portfolio-theme-v3', theme); } catch (e) {}
   }
-  let initial = 'light';
+  let initial = 'dark';
   try {
-    const saved = localStorage.getItem('portfolio-theme');
+    const saved = localStorage.getItem('portfolio-theme-v3');
     if (saved === 'dark' || saved === 'light') initial = saved;
   } catch (e) {}
   applyTheme(initial);
   themeBtn.addEventListener('click', () => {
-    const cur = document.documentElement.dataset.theme || 'light';
+    const cur = document.documentElement.dataset.theme || 'dark';
     applyTheme(cur === 'dark' ? 'light' : 'dark');
   });
 
@@ -130,7 +132,7 @@
   let vignette = null;
   if (knightScene && chessCanvas && window.ChessVignette) {
     vignette = new window.ChessVignette(chessCanvas, {
-      theme: document.documentElement.dataset.theme || 'light',
+      theme: document.documentElement.dataset.theme || 'dark',
     });
     window.__vignette = vignette;
 

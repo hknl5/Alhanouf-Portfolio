@@ -37,7 +37,15 @@
   ];
 
   function latheGeometry(profile, segments) {
-    const pts = profile.map((p) => new THREE.Vector2(p[0], p[1]));
+    // Run a smooth curve through the profile so the turned piece has
+    // soft, polished transitions instead of faceted steps.
+    const raw = profile.map((p) => new THREE.Vector3(p[0], p[1], 0));
+    const curve = new THREE.CatmullRomCurve3(raw, false, 'centripetal', 0.5);
+    const pts = curve.getPoints(profile.length * 10).map(
+      (v) => new THREE.Vector2(Math.max(0, v.x), v.y)
+    );
+    pts[0].set(0, profile[0][1]);
+    pts[pts.length - 1].set(0, profile[profile.length - 1][1]);
     const geo = new THREE.LatheGeometry(pts, segments);
     geo.computeVertexNormals();
     return geo;
@@ -45,18 +53,18 @@
 
   function knightHeadGeometry() {
     const shape = new THREE.Shape();
-    shape.moveTo(KNIGHT_HEAD[0][0], KNIGHT_HEAD[0][1]);
-    for (let i = 1; i < KNIGHT_HEAD.length; i++) {
-      shape.lineTo(KNIGHT_HEAD[i][0], KNIGHT_HEAD[i][1]);
-    }
-    shape.closePath();
+    // Smooth spline through the silhouette points: soft muzzle, rounded
+    // ears and a flowing mane instead of straight polygon edges.
+    const pts = KNIGHT_HEAD.map((p) => new THREE.Vector2(p[0], p[1]));
+    shape.moveTo(pts[0].x, pts[0].y);
+    shape.splineThru(pts.slice(1).concat([pts[0].clone()]));
     const geo = new THREE.ExtrudeGeometry(shape, {
       depth: 0.52,
       bevelEnabled: true,
-      bevelThickness: 0.07,
-      bevelSize: 0.07,
-      bevelSegments: 4,
-      curveSegments: 12,
+      bevelThickness: 0.09,
+      bevelSize: 0.08,
+      bevelSegments: 8,
+      curveSegments: 10,
     });
     geo.translate(0, 0, -0.26); // center on z
     geo.computeVertexNormals();
@@ -133,15 +141,15 @@
       this.key.shadow.radius = 4;
       this.scene.add(this.key);
 
-      this.rim = new THREE.DirectionalLight(0xbcd2ff, 0.4);
+      this.rim = new THREE.DirectionalLight(0xc4f4f4, 0.4);
       this.rim.position.set(-5, 3, -4);
       this.scene.add(this.rim);
     }
 
     _boardColors() {
       return this.theme === 'dark'
-        ? { light: 0x3a3a42, dark: 0x24242b, edge: 0x14141a }
-        : { light: 0xe9e4da, dark: 0xc4bcac, edge: 0xb4ab99 };
+        ? { light: 0x4a3729, dark: 0x2b1e17, edge: 0x1a120d }
+        : { light: 0xe3f9f9, dark: 0x9fd6d6, edge: 0x7fb8b8 };
     }
 
     _buildBoard() {
@@ -188,32 +196,32 @@
     _buildPieces() {
       // Queen — warm metallic gold (echoes the site's orange accent).
       this.queenMat = new THREE.MeshStandardMaterial({
-        color: this.theme === 'dark' ? 0xf4b15a : 0xe08a2e,
+        color: this.theme === 'dark' ? 0xc4f4f4 : 0x2f8f92,
         roughness: 0.34,
         metalness: 0.55,
-        emissive: 0x2a1402,
+        emissive: 0x06201f,
         emissiveIntensity: 0.18,
       });
       // Knight — dark graphite plastic.
       this.knightMat = new THREE.MeshStandardMaterial({
-        color: this.theme === 'dark' ? 0xe7e7ec : 0x26262c,
+        color: this.theme === 'dark' ? 0xb5794a : 0x2b1e17,
         roughness: 0.5,
         metalness: 0.18,
       });
 
       // --- Queen group ---
       this.queenGroup = new THREE.Group();
-      const qBody = new THREE.Mesh(latheGeometry(QUEEN_PROFILE, 48), this.queenMat);
+      const qBody = new THREE.Mesh(latheGeometry(QUEEN_PROFILE, 72), this.queenMat);
       qBody.castShadow = true;
       qBody.receiveShadow = true;
       this.queenGroup.add(qBody);
       // crown ball finial on top
-      const qBall = new THREE.Mesh(new THREE.SphereGeometry(0.14, 24, 18), this.queenMat);
+      const qBall = new THREE.Mesh(new THREE.SphereGeometry(0.14, 32, 24), this.queenMat);
       qBall.position.y = 1.65;
       qBall.castShadow = true;
       this.queenGroup.add(qBall);
       // pearl coronet — ring of small spheres around the crown rim
-      const pearlGeo = new THREE.SphereGeometry(0.052, 14, 12);
+      const pearlGeo = new THREE.SphereGeometry(0.052, 20, 16);
       const PEARLS = 9;
       for (let i = 0; i < PEARLS; i++) {
         const a = (i / PEARLS) * Math.PI * 2;
@@ -227,7 +235,7 @@
 
       // --- Knight group ---
       this.knightGroup = new THREE.Group();
-      const kBase = new THREE.Mesh(latheGeometry(KNIGHT_BASE_PROFILE, 48), this.knightMat);
+      const kBase = new THREE.Mesh(latheGeometry(KNIGHT_BASE_PROFILE, 72), this.knightMat);
       kBase.castShadow = true;
       kBase.receiveShadow = true;
       this.knightGroup.add(kBase);
@@ -250,15 +258,15 @@
         tile.material.color.setHex(tile.userData.isDark ? c.dark : c.light);
       }
       if (this.plinth) this.plinth.material.color.setHex(c.edge);
-      this.queenMat.color.setHex(theme === 'dark' ? 0xf4b15a : 0xe08a2e);
-      this.knightMat.color.setHex(theme === 'dark' ? 0xe7e7ec : 0x26262c);
+      this.queenMat.color.setHex(theme === 'dark' ? 0xc4f4f4 : 0x2f8f92);
+      this.knightMat.color.setHex(theme === 'dark' ? 0xb5794a : 0x2b1e17);
       this.rim.intensity = theme === 'dark' ? 0.55 : 0.4;
     }
 
     play() {
       if (this.playing || this.done) return;
       this.playing = true;
-      this.t0 = performance.now();
+      this.t0 = performance.now() + 2000; // wait 2s after it scrolls into view
     }
 
     reset() {
@@ -266,6 +274,7 @@
       this.done = false;
       this.knightGroup.position.set(this.knightSq.c, 0, this.knightSq.r);
       this.knightGroup.rotation.set(0, 0, 0);
+      this.knightGroup.scale.setScalar(0.6);
       this.queenGroup.position.set(this.queenSq.c, 0, this.queenSq.r);
       this.queenGroup.rotation.set(0, 0, 0);
       this.queenGroup.scale.setScalar(0.6);
@@ -281,48 +290,66 @@
     _animate(now) {
       const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
       const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      const clamp01 = (v) => Math.max(0, Math.min(1, v));
 
-      const DUR = 3200;
+      if (now < this.t0) return; // still in the 2s pause
+      const DUR = 1700;
       const t = Math.min(1, (now - this.t0) / DUR);
+      const S = this.knightSq, E = this.queenSq;
+      const BASE = 0.6;
 
-      const start = this.knightSq, end = this.queenSq;
-      // Two-leg L-move: leg 1 = 2 squares forward (z), leg 2 = 1 across (x).
-      let x = start.c, z = start.r, lift = 0;
-      const aim = (this.queenSq.c - this.knightSq.c); // facing turn
+      // 0.00–0.10 coil · 0.10–0.48 one fast, high leap · 0.48 SLAM · rest: queen flies
+      const coil = clamp01(t / 0.10);
+      const u = easeInOut(clamp01((t - 0.10) / 0.38));
+      const landed = t >= 0.48;
+      const impact = clamp01((t - 0.48) / 0.10);
 
-      if (t < 0.5) {
-        const u = easeInOut(t / 0.5);
-        z = start.r + (end.r - start.r) * u;
-        x = start.c;
-        lift = Math.sin(u * Math.PI) * 1.5 + 0.15;
-      } else {
-        const u = easeInOut((t - 0.5) / 0.5);
-        z = end.r;
-        x = start.c + (end.c - start.c) * u;
-        lift = Math.sin(u * Math.PI) * 1.2 + 0.15;
-      }
+      // Arc through the L corner, high and fast.
+      const cx = S.c, cz = E.r, iu = 1 - u;
+      const x = iu * iu * S.c + 2 * iu * u * cx + u * u * E.c;
+      const z = iu * iu * S.r + 2 * iu * u * cz + u * u * E.r;
+      const lift = landed ? 0 : Math.sin(u * Math.PI) * 2.6;
       this.knightGroup.position.set(x, lift, z);
-      // bank into the hop
-      this.knightGroup.rotation.z = -Math.sin(t * Math.PI) * 0.12 * Math.sign(aim || 1);
-      this.knightGroup.rotation.x = Math.sin(t * TAU) * 0.05;
 
-      // Queen reaction: tremble, then topple + sink + fade once knight lands.
-      if (t < 0.82) {
-        const w = Math.sin(now / 60) * 0.02 * (t > 0.3 ? 1 : 0);
-        this.queenGroup.rotation.z = w;
-        this.queenGroup.position.set(end.c, 0, end.r);
+      // Coil down, stretch in the air, hard squash on impact.
+      let sy = 1;
+      if (t < 0.10) sy = 1 - Math.sin(coil * Math.PI * 0.5) * 0.18;
+      else if (!landed) sy = 1 + Math.sin(u * Math.PI) * 0.08;
+      else sy = 1 - Math.sin(impact * Math.PI) * 0.22;
+      const sxz = 1 + (1 - sy) * 0.5;
+      this.knightGroup.scale.set(BASE * sxz, BASE * sy, BASE * sxz);
+
+      // Dive forward through the leap.
+      const air = landed ? 0 : Math.sin(u * Math.PI);
+      this.knightGroup.rotation.x = -0.35 * air * (u < 0.5 ? 0.6 : 1);
+      this.knightGroup.rotation.z = -0.2 * air;
+
+      // Camera shake on impact.
+      if (landed && impact < 1) {
+        const k = (1 - impact) * 0.09;
+        this.camera.position.x += (Math.random() - 0.5) * k;
+        this.camera.position.y += (Math.random() - 0.5) * k;
+      }
+
+      // Queen: nudged back a little, tips over, fades. No flying.
+      if (!landed) {
+        this.queenGroup.rotation.set(0, 0, 0);
+        this.queenGroup.position.set(E.c, 0, E.r);
       } else {
-        const u = easeOut((t - 0.82) / 0.18);
-        this.queenGroup.rotation.z = u * 1.25; // topple over
-        this.queenGroup.position.set(end.c + u * 0.55, -u * 0.18, end.r);
-        this.queenGroup.scale.setScalar(0.6 * (1 - u * 0.1));
-        this._setQueenOpacity(1 - u);
+        const q = easeOut(clamp01((t - 0.48) / 0.52));
+        const dx = E.c - S.c, dz = E.r - S.r, len = Math.hypot(dx, dz) || 1;
+        const dist = q * 0.7;
+        this.queenGroup.position.set(E.c + (dx / len) * dist, 0, E.r + (dz / len) * dist);
+        this.queenGroup.rotation.set(0, 0, q * 1.35);
+        this._setQueenOpacity(1 - clamp01((q - 0.5) / 0.5));
       }
 
       if (t >= 1) {
         this.playing = false;
         this.done = true;
         this.queenGroup.visible = false;
+        this.knightGroup.scale.setScalar(BASE);
+        this.knightGroup.rotation.set(0, 0, 0);
       }
     }
 

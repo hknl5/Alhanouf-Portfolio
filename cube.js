@@ -3,15 +3,20 @@
 // Requires THREE on global scope.
 
 (function () {
-  // Bright, true Rubik's colors — minimal shading so they read as flat colors.
+  // Pastel sticker set on an espresso body.
+  // COLORS = light mode; DARK_COLORS = one step deeper for dark mode.
   const COLORS = {
-    R: '#ee3b3b', // right (+x) red
-    O: '#ff8e1c', // left  (-x) orange
-    U: '#e7e7e7', // up    (+y) white
-    D: '#ffd60a', // down  (-y) yellow
-    F: '#34c759', // front (+z) green
-    B: '#1f7af0', // back  (-z) blue
-    X: '#474752', // inner / cube body
+    R: '#B8E8D4', // right (+x) mint
+    O: '#FFCBB0', // left  (-x) peach
+    U: '#FFF4DC', // up    (+y) cream
+    D: '#D4C4F2', // down  (-y) lavender
+    F: '#FFE9A8', // front (+z) butter
+    B: '#F7C6D9', // back  (-z) pink
+    X: '#1A120D', // cubie body (espresso)
+  };
+  const DARK_COLORS = {
+    R: '#A6D9C4', O: '#F2B89C', U: '#F2E6CC',
+    D: '#C2B1E6', F: '#F2D98F', B: '#E8B2C8', X: '#1A120D',
   };
 
   // Move helpers: {axis, layer, dir}.
@@ -162,35 +167,30 @@
       const geo = makeRoundedBox(size, radius, 6);
       // BoxGeometry face order in 'materials' array:
       // 0: +x, 1: -x, 2: +y, 3: -y, 4: +z, 5: -z
-      const mkMat = (hex) => {
-        const isSticker = hex !== COLORS.X;
-        const c = new THREE.Color(hex);
-        if (!isSticker) {
-          return new THREE.MeshStandardMaterial({
-            color: hex,
-            roughness: 0.85,
-            metalness: 0.0,
-          });
-        }
-        // Sticker faces: MeshLambertMaterial with emissive baked in so
-        // the color stays vivid even on shaded corners. No metalness, no
-        // specular highlights — reads as flat plastic sticker.
-        return new THREE.MeshLambertMaterial({
-          color: hex,
-          emissive: c,
-          emissiveIntensity: 0.55,
-        });
+      // Shared materials: one per face so setTheme() can recolor them.
+      this.faceMats = {};
+      const mkMat = (key) => {
+        if (this.faceMats[key]) return this.faceMats[key];
+        const hex = COLORS[key];
+        // Flat sticker look: emissive baked in so colors stay even.
+        const mat = key === 'X'
+          ? new THREE.MeshStandardMaterial({ color: hex, roughness: 0.85, metalness: 0.0 })
+          : new THREE.MeshLambertMaterial({
+              color: hex, emissive: new THREE.Color(hex), emissiveIntensity: 0.55,
+            });
+        this.faceMats[key] = mat;
+        return mat;
       };
       for (let x = -1; x <= 1; x++) {
         for (let y = -1; y <= 1; y++) {
           for (let z = -1; z <= 1; z++) {
             const mats = [
-              mkMat(x ===  1 ? COLORS.R : COLORS.X),
-              mkMat(x === -1 ? COLORS.O : COLORS.X),
-              mkMat(y ===  1 ? COLORS.U : COLORS.X),
-              mkMat(y === -1 ? COLORS.D : COLORS.X),
-              mkMat(z ===  1 ? COLORS.F : COLORS.X),
-              mkMat(z === -1 ? COLORS.B : COLORS.X),
+              mkMat(x ===  1 ? 'R' : 'X'),
+              mkMat(x === -1 ? 'O' : 'X'),
+              mkMat(y ===  1 ? 'U' : 'X'),
+              mkMat(y === -1 ? 'D' : 'X'),
+              mkMat(z ===  1 ? 'F' : 'X'),
+              mkMat(z === -1 ? 'B' : 'X'),
             ];
             const mesh = new THREE.Mesh(geo, mats);
             mesh.position.set(x, y, z);
@@ -316,12 +316,17 @@
 
     setTheme(theme) {
       this.theme = theme;
-      // Bright flat-color look in both themes; rim color shifts subtly.
+      const pal = theme === 'dark' ? DARK_COLORS : COLORS;
+      for (const key in this.faceMats) {
+        const m = this.faceMats[key];
+        m.color.set(pal[key]);
+        if (m.emissive && key !== 'X') m.emissive.set(pal[key]);
+      }
       if (theme === 'dark') {
         this.ambient.intensity = 0.95;
         this.keyLight.intensity = 0.4;
         this.rimLight.intensity = 0.4;
-        this.rimLight.color.setHex(0x7cc6ff);
+        this.rimLight.color.setHex(0x8fe3e6);
       } else {
         this.ambient.intensity = 1.1;
         this.keyLight.intensity = 0.35;
@@ -342,20 +347,24 @@
 
     update(dt, t) {
       // Smooth scroll progress
-      const k = Math.min(1, dt * 7);
+      // Critically-damped follow: glides to the scroll position, no jitter.
+      const k = 1 - Math.exp(-dt * 4.5);
       this.smoothProgress += (this.targetProgress - this.smoothProgress) * k;
 
       const N = this.moves.length;
       if (N > 0) {
         const f = this.smoothProgress * N;
         const idx = Math.max(0, Math.min(N, Math.floor(f)));
-        const sub = f - Math.floor(f);
+        const raw = f - Math.floor(f);
+        // Ease each quarter-turn in and out (smootherstep) so turns feel
+        // like a hand flicking a layer, not a motor.
+        const sub = raw * raw * raw * (raw * (raw * 6 - 15) + 10);
         const clampedIdx = idx >= N ? N : idx;
         this.syncTo(clampedIdx, clampedIdx < N ? sub : 0);
       }
 
       // Idle cinematic orbit
-      this.spinPhase += dt * 0.15;
+      this.spinPhase += dt * 0.12;
       const r = 11;
       const yaw = this.spinPhase * 0.35;
       const pitch = 0.45 + Math.sin(this.spinPhase * 0.4) * 0.12;
@@ -366,7 +375,7 @@
       );
 
       // Lerp screen-space shift
-      this.screenShift.lerp(this.targetScreenShift, Math.min(1, dt * 3));
+      this.screenShift.lerp(this.targetScreenShift, 1 - Math.exp(-dt * 2.4));
 
       // Compute camera right & up from the gaze direction (baseCam → origin)
       const gaze = baseCam.clone().negate().normalize();
